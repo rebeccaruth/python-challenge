@@ -42,7 +42,7 @@ with open(budget_csv) as csvfile:
         
 
 #average        
-pl_avg = pl_total / month_total
+pl_avg = pl_total / (month_total)
 
 #print results
 output = (

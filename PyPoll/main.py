@@ -39,8 +39,15 @@ with open(election_data) as csvfile:
 
     #calculate winner
     highest_vote = max(khan_votes, correy_votes, li_votes, otooley_votes)
-
-
+    if highest_vote == khan_votes:
+        highest_vote = "Khan"
+    elif highest_vote == correy_votes:
+        highest_vote = "Correy"
+    elif highest_vote == li_votes:
+        highest_vote = "Li"
+    elif highest_vote == otooley_votes:
+        highest_vote = "O'Tooley"
+        
 
 #print output
 output = (
@@ -49,7 +56,7 @@ output = (
     f'Total Votes: {vote_count}\n'
     f'-----------------\n'
     f'Khan: {khan_percent}% ({khan_votes})\n'
-    f'Correy: {correy_percent}% ({correy_votes}\n'
+    f'Correy: {correy_percent}% ({correy_votes})\n'
     f'Li: {li_percent}% ({li_votes})\n'
     f"O'Tooley: {otooley_percent}% ({otooley_votes})\n"
     f'-----------------\n'
