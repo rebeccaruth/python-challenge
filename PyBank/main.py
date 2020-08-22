@@ -4,10 +4,10 @@ import csv
 budget_csv = os.path.join('PyBank','Resources', 'budget_data.csv')
 with open(budget_csv) as csvfile:
     csvreader = csv.DictReader(csvfile, delimiter=',')
-    header = next(csvreader)
+    #header = next(csvreader)
 
 #variables
-    month_total = 1
+    month_total = 0
     pl_total = 0
     last_pl = 0
     pl_change = 0
@@ -15,34 +15,35 @@ with open(budget_csv) as csvfile:
     month_change = []
     greatest_inc = ["", 0]
     greatest_dec = ["", 99999999]
-
+    total_change = 0
 
 #loop
     for row in csvreader:
 
         #totals
         month_total = month_total + 1
+        #net_total = net_total + profit 
         pl_total = pl_total + int(row["Profit/Losses"])   
 
         #revenue changes
-        pl_change = int(row["Profit/Losses"]) - last_pl
-        last_pl = int(row["Profit/Losses"])
-        month_change = month_change + [row["Date"]]
+        if last_pl != 0:
+            pl_change = int(row["Profit/Losses"]) - last_pl           
+            total_change = total_change + pl_change
+       
+            #greatest increase
+            if (pl_change > greatest_inc[1]):
+                greatest_inc[1] = pl_change
+                greatest_inc[0] = [row["Date"]]
 
-        #greatest increase
-        if (pl_change > greatest_inc[1]):
-            greatest_inc[1] = pl_change
-            greatest_inc[0] = [row["Date"]]
-
-         #greatest decrease
-        if (pl_change < greatest_dec[1]):
-            greatest_dec[0] = [row["Date"]] 
-            greatest_dec[1] = pl_change
-               
+            #greatest decrease
+            if (pl_change < greatest_dec[1]):
+                greatest_dec[0] = [row["Date"]] 
+                greatest_dec[1] = pl_change
+        last_pl = int(row["Profit/Losses"])   
         
 
-#average        
-pl_avg = pl_total / (month_total)
+#average 
+pl_avg = total_change / (month_total - 1)
 
 #print results
 output = (
