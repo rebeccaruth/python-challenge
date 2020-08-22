@@ -16,9 +16,6 @@ with open(budget_csv) as csvfile:
     greatest_inc = ["", 0]
     greatest_dec = ["", 99999999]
 
-    #print
-    print("Financial Analysis")
-    print("------------------")
 
 #loop
     for row in csvreader:
@@ -49,6 +46,8 @@ pl_avg = pl_total / month_total
 
 #print results
 output = (
+    f'Financial Analysis\n'
+    f'------------------\n'
     f'Total Months: {month_total}\n'
     f'Total: ${pl_total}\n'
     f'Average Change: ${pl_avg}\n'
